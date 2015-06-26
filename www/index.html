@@ -20,7 +20,18 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="controllers/app-controller.js"></script>
+    <script src="controllers/browse-source-controller.js"></script>
+    <script src="controllers/browse-controller.js"></script>
+
+    <!-- SOUNDCLOUD API -->
+    <script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
+    <script>
+      SC.initialize({
+        client_id: "YOUR_CLIENT_ID",
+        redirect_uri: "http://example.com/callback",
+      });
+    </script>
   </head>
 
   <body ng-app="starter">
