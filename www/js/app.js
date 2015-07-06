@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'playthist.controllers'])
+angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -49,11 +49,21 @@ angular.module('starter', ['ionic', 'playthist.controllers'])
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('app.browse_options', {
+    url: "/browse_options",
     views: {
       'menuContent': {
-        templateUrl: "templates/browse.html",
+        templateUrl: "templates/browse_options.html",
+        controller: "BrowseCtrl"
+      }
+    }
+  })
+
+  .state('app.browse_tracks', {
+    url: "/browse_tracks?source&tracklistType&playlistId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/browse_tracks.html",
         controller: "BrowseCtrl"
       }
     }
@@ -82,3 +92,7 @@ angular.module('starter', ['ionic', 'playthist.controllers'])
 });
 
 var controllers = angular.module('playthist.controllers', []);
+var services = angular.module('playthist.services', []);
+
+//logging into soundcloud for testing purposes
+var SOUNDCLOUD_CLIENT_ID = "d12ed0f6cd75e878fbbf665a06a2ca2b";
