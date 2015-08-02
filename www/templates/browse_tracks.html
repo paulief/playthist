@@ -1,8 +1,11 @@
 <ion-view view-title="Browse Favorites">
   <ion-content>
     <ion-list>
-	    <ion-item ng-repeat="track in tracks">
+	    <ion-item class="item-button-right" ng-repeat="track in tracks">
 	      {{track.title}}
+	      <button class="button button-light" ng-click="openPlaylistChoices()">
+	      	<i class="icon ion-plus-round"></i>
+	      </button>
 	    </ion-item>
     </ion-list>
   </ion-content>

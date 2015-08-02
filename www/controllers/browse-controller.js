@@ -1,4 +1,5 @@
-controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', function($scope, $stateParams, MusicGetter) {
+controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '$ionicModal', 
+	function($scope, $stateParams, MusicGetter, $ionicModal) {
 
 	//pass in state params, use it to get the possible options for the selected source
 	console.log($stateParams.tracklistType);
@@ -17,4 +18,19 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', f
 			$scope.tracks = tracks;
 		});
 	};
+
+	$ionicModal.fromTemplateUrl('templates/add_track_to_lists.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+
+	$scope.openPlaylistChoices = function() {
+		$scope.modal.show();
+	};
+
+	$scope.addTrackToLists = function() {
+		$scope.modal.hide();
+	}
 }]);
