@@ -59,8 +59,18 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
     }
   })
 
+  .state('app.browse_playlists', {
+    url: "/browse_playlists?listType&source",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/browse_playlists.html",
+        controller: "BrowseCtrl"
+      }
+    }
+  })
+
   .state('app.browse_tracks', {
-    url: "/browse_tracks?source&tracklistType&playlistId",
+    url: "/browse_tracks?listType&source&tracklistType&playlistId",
     views: {
       'menuContent': {
         templateUrl: "templates/browse_tracks.html",
