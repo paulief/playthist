@@ -1,5 +1,5 @@
-controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '$ionicModal', 
-	function($scope, $stateParams, MusicGetter, $ionicModal) {
+controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', 'CurrentPlaylist', '$ionicModal', 
+	function($scope, $stateParams, MusicGetter, CurrentPlaylist, $ionicModal) {
 
 	//pass in state params, use it to get the possible options for the selected source
 
@@ -21,13 +21,18 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 				});
 			break;
 			case "tracks":
-				MusicGetter.getTracks($stateParams.source,$stateParams.tracklistType, null).then(function(tracks) {
-					$scope.tracks = tracks;
-				});
+				switch($stateParams.tracklistType) {
+					case "favorites":
+						MusicGetter.getTracks($stateParams.source,$stateParams.tracklistType, null).then(function(tracks) {
+							$scope.tracks = tracks;
+						});
+					break;
+					case "playlistTracks":
+						$scope.tracks = CurrentPlaylist.getCurrentPlaylist().tracks;
+					break;
+				}
 			break;
 		}
-		//var retProm = MusicGetter.getTracks($stateParams.source,$stateParams.tracklistType, null);
-		//console.log(retProm);
 	};
 
 	$ionicModal.fromTemplateUrl('templates/add_track_to_lists.html', {
@@ -37,6 +42,8 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 		$scope.modal = modal;
 	});
 
+	$scope.getPlayListSongs
+
 	$scope.openPlaylistChoices = function() {
 		$scope.modal.show();
 	};
@@ -44,4 +51,8 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 	$scope.addTrackToLists = function() {
 		$scope.modal.hide();
 	}
+
+	$scope.choosePlaylistTracks = function(playlist) {
+		CurrentPlaylist.setCurrentPlaylist(playlist);
+	};
 }]);

@@ -1,7 +1,7 @@
 <ion-view view-title="Browse Favorites">
   <ion-content>
     <ion-list>
-	    <ion-item ng-repeat="playlist in playlists">
+	    <ion-item href="#/app/browse_tracks?listType=tracks&source=soundcloud&tracklistType=playlistTracks" ng-repeat="playlist in playlists" ng-click="choosePlaylistTracks(playlist)">
 	      {{playlist.title}}
 	    </ion-item>
     </ion-list>
