@@ -1,5 +1,5 @@
-controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', 'CurrentPlaylist', '$ionicModal', 
-	function($scope, $stateParams, MusicGetter, CurrentPlaylist, $ionicModal) {
+controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', 'CurrentPlaylist', 'PlaylistHTTPManager', '$ionicModal', 
+	function($scope, $stateParams, MusicGetter, CurrentPlaylist, PlaylistHTTPManager, $ionicModal) {
 
 	//pass in state params, use it to get the possible options for the selected source
 
@@ -46,6 +46,9 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 
 	$scope.openPlaylistChoices = function() {
 		$scope.modal.show();
+		PlaylistHTTPManager.testRequest().then(function(msg) {
+			console.log(msg);
+		});
 	};
 
 	$scope.addTrackToLists = function() {
