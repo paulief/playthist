@@ -3,7 +3,7 @@
     <ion-list>
 	    <ion-item class="item-button-right" ng-repeat="track in tracks">
 	      {{track.title}}
-	      <button class="button button-light" ng-click="openPlaylistChoices()">
+	      <button class="button button-light" ng-click="trackChosenToAdd(track)">
 	      	<i class="icon ion-plus-round"></i>
 	      </button>
 	    </ion-item>

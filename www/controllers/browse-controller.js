@@ -42,19 +42,23 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 		$scope.modal = modal;
 	});
 
-	$scope.getPlayListSongs
+	$scope.trackChosenToAdd = function(track) {
+		$scope.activeTrack = track;
+		openPlaylistChoices();
+	};
 
-	$scope.openPlaylistChoices = function() {
+	var openPlaylistChoices = function() {
 		$scope.modal.show();
-		PlaylistHTTPManager.testRequest().then(function(msg) {
-			console.log(msg);
-		});
 	};
 
 	$scope.addTrackToLists = function() {
-		$scope.modal.hide();
+		PlaylistHTTPManager.addTrackToPlaylist($scope.activeTrack, [], 1).then(function(msg) {
+			console.log(msg);
+			$scope.modal.hide();
+		});		
 	}
 
+	//playlist chosen from Browse Playlists
 	$scope.choosePlaylistTracks = function(playlist) {
 		CurrentPlaylist.setCurrentPlaylist(playlist);
 	};
