@@ -12,12 +12,11 @@ create table test.added_songs
 	track_added_id serial,
 	track_id integer,
 	playlist_id integer,
-	user_id integer, --not needed
 	track_title text,
-	track_posted_by text, --need to add this
+	track_posted_by varchar(100),
 	stream_url text,
 	artwork_url text,
-	track_src character(3), --needs to be longer, to just store the entire StateParam
+	track_src varchar(20),
 	create_dtm timestamp default current_timestamp
 );
 

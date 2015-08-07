@@ -53,7 +53,8 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 			track_title: track.title,
 			artwork_url: track.artwork_url,
 			stream_url: track.stream_url,
-			track_src: $stateParams.source
+			track_src: $stateParams.source,
+			track_posted_by: track.user.username
 		};
 	};
 
@@ -63,11 +64,11 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 
 	$scope.addTrackToLists = function() {
 		//need error handling here
-		PlaylistHTTPManager.addTrackToPlaylist($scope.activeTrack, [], 1).then(function(msg) {
+		PlaylistHTTPManager.addTrackToPlaylist($scope.activeTrack, 1 /*will be array*/).then(function(msg) {
 			console.log(msg);
 			$scope.modal.hide();
 		});		
-	}
+	};
 
 	//playlist chosen from Browse Playlists
 	$scope.choosePlaylistTracks = function(playlist) {
