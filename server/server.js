@@ -54,19 +54,4 @@ app.post('/addtrack', function(req,res) {
 				};
 		});
 	}); 
-
-	/* var client = new pg.Client(pgConnectionString);
-	client.connect(function(err) {
-		if(err) {
-    		return console.error('could not connect to postgres', err);
-  		};
-  		client.query(insertSql, [track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src],
-			function(err, result) {
-				if (err) {
-					res.status(500).send(err);
-				} else {
-					res.status(200).send({message: "Track added to playlists"});
-				};
-		});
-	}); */
 });
