@@ -2,6 +2,7 @@
   "name": "playthist",
   "version": "1.0.0",
   "description": "playthist: An Ionic project",
+  "author": "Paul Fagan",
   "dependencies": {
     "body-parser": "^1.13.3",
     "cors": "^2.7.1",
