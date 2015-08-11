@@ -1,16 +1,11 @@
+/*
+Controller shared by Browse Playlists and Browse Tracks views
+*/
 controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', 'CurrentPlaylist', 'PlaylistHTTPManager', '$ionicModal', 
 	function($scope, $stateParams, MusicGetter, CurrentPlaylist, PlaylistHTTPManager, $ionicModal) {
 
-	//pass in state params, use it to get the possible options for the selected source
-
-	/** SC.get("/users/70188989/favorites", {limit: 10}, function(tracks){
-  		//alert("Latest track: " + tracks[0].title);
-  		console.log(tracks);
-  		$scope.tracks = tracks;
-	}); */
-	
+	//stateParams come in from href in template
 	if ($stateParams.source) {
-
 		console.log($stateParams.source);
 		console.log($stateParams.listType);
 
@@ -41,6 +36,9 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 	}).then(function(modal) {
 		$scope.modal = modal;
 	});
+
+
+	//Functions for the track list page *****************************************
 
 	$scope.trackChosenToAdd = function(track) {
 		$scope.activeTrack = getNeededTrackFields(track);

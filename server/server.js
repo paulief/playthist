@@ -11,10 +11,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
@@ -22,10 +18,13 @@ var server = app.listen(3000, function () {
   console.log('Example app listening at http://%s:%s', host, port);
 });
 
-app.post('/addtrack', function(req,res) {
-	console.log(req.body);
-	//res.send('POST received');
+//test to check if server is live
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
 
+//adding to tracks to one or many playlists
+app.post('/addTrack', function(req,res) {
 	//values from POST request
 	var track_id = req.body.track.track_id;
 	var playlist_id = req.body.playlists; //will be array
@@ -54,4 +53,30 @@ app.post('/addtrack', function(req,res) {
 				};
 		});
 	}); 
+});
+
+//creating a playlist
+app.post('/createPlaylist', function(req,res) {
+	//values from POST request
+	var user_id = req.body.user_id;
+	var playlist_name = req.body.playlist_name;
+
+	pg.connect(pgConnectionString, function(err, client, done) {
+		if (err) {
+			res.status(500).send(err);
+		};
+
+		var insertSql = "INSERT INTO test.playlists" +
+						"(playlist_name, user_id)" +
+						"VALUES ($1, $2)";
+		client.query(insertSql, [playlist_name, user_id], function(err, result) {
+			done();
+
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				res.status.send({message: "Playlist created: " + playlist_name});
+			};
+		})
+	});
 });

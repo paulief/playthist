@@ -53,8 +53,8 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
     url: "/browse_options",
     views: {
       'menuContent': {
-        templateUrl: "templates/browse_options.html",
-        controller: "BrowseCtrl"
+        templateUrl: "templates/browse_options.html"/*,
+        controller: "BrowseCtrl"*/
       }
     }
   })
