@@ -9,6 +9,8 @@ I am implementing this using Ionic (http://ionicframework.com/), and Angular-bas
 Since I am currently using this just as a learning experience, only the back-end database and node server are hosted at the moment (the front-end still needs to be hosted locally). To run the application locally, after cloning the repository, run `bower install` in the project directory to install the necessary dependencies. Then, start up an HTTP server inside the /www/ directory (I use the node module `http-server` for this).
 
 ####TODO
+- Set up sign up/login function
+- Link to user's music accounts (currently just uses mine while I got functionality working)
 - Change all API keys and passwords since those used for testing exist in commit history, start using local config file
 - Incorporate more sources (currently only have Soundcloud functionality)
 - Incorporate local music library of device (could require custom Cordova plugin?)

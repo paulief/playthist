@@ -23,7 +23,9 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-//adding to tracks to one or many playlists
+/*
+adding to tracks to one or many playlists
+*/
 app.post('/addTrack', function(req,res) {
 	//values from POST request
 	var track_id = req.body.track.trackId;
@@ -55,7 +57,9 @@ app.post('/addTrack', function(req,res) {
 	}); 
 });
 
-//creating a playlist
+/*
+creating a new playlist
+*/
 app.post('/createPlaylist', function(req,res) {
 	//values from POST request
 	var user_id = req.body.userId;
@@ -80,5 +84,39 @@ app.post('/createPlaylist', function(req,res) {
 				res.status(200).send({message: "Playlist created: " + playlist_name});
 			};
 		})
+	});
+});
+
+app.get('/getUserPlaylists/:user_id', function(req, res) {
+	var user_id = req.params.user_id;
+	var results = [];
+
+	pg.connect(pgConnectionString, function(err, client, done) {
+		if (err) {
+			res.status(500).send(err);
+			console.log(err);
+		};
+
+		var selectSql = "SELECT playlist_id, playlist_name, create_dtm " +
+						"FROM test.playlists " + 
+						"WHERE user_id = $1";
+		var query = client.query(selectSql, [user_id], function(err) {
+			if (err) {
+				res.status(500).send(err);
+				console.log(err);
+			}
+		});
+
+		query.on('row', function(row) {
+			results.push({
+				playlistId: row.playlist_id,
+				playlistName: row.playlist_name,
+				playlistCreateDtm: row.create_dtm
+			});
+		});
+		query.on('end', function() {
+			done();
+			res.json(results);
+		});
 	});
 });
