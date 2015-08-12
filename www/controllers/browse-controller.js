@@ -47,12 +47,12 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 
 	var getNeededTrackFields = function(track) {
 		return {
-			track_id: track.id,
-			track_title: track.title,
-			artwork_url: track.artwork_url,
-			stream_url: track.stream_url,
-			track_src: $stateParams.source,
-			track_posted_by: track.user.username
+			trackId: track.id,
+			trackTitle: track.title,
+			artworkUrl: track.artwork_url,
+			streamUrl: track.stream_url,
+			trackSrc: $stateParams.source,
+			trackPostedBy: track.user.username
 		};
 	};
 
@@ -61,8 +61,9 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 	};
 
 	$scope.addTrackToLists = function() {
+		var trackToSave = {track: $scope.activeTrack, playlists: 1 /*will be array*/};
 		//need error handling here
-		PlaylistHTTPManager.addTrackToPlaylist($scope.activeTrack, 1 /*will be array*/).then(function(msg) {
+		PlaylistHTTPManager.addTrackToPlaylist(trackToSave).then(function(msg) {
 			console.log(msg);
 			$scope.modal.hide();
 		});		

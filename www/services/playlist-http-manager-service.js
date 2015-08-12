@@ -19,9 +19,9 @@ services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 		return deferred.promise;
 	};
 
-	playlistHTTPManagerService.addTrackToPlaylist = function(track, playlists, userId) {
+	playlistHTTPManagerService.addTrackToPlaylist = function(trackToSave) {
 		var deferred = $q.defer();
-		$http.post('http://54.69.152.172:3000/addTrack', {track: track, playlists: playlists}).success(function(data, status, headers, config) {
+		$http.post('http://54.69.152.172:3000/addTrack', trackToSave).success(function(data, status, headers, config) {
 			deferred.resolve(data);
 		}).error(function(data, status, headers, config) {
 			console.log("error in POST request");
@@ -30,9 +30,9 @@ services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 		return deferred.promise;
 	};
 
-	playlistHTTPManagerService.createPlaylist = function(userId, playlistName) {
+	playlistHTTPManagerService.createPlaylist = function(playlist) {
 		var deferred = $q.defer();
-		$http.post('http://54.69.152.172:3000/createPlaylist', {userId: userId, playlistName: playlistName}).success(function(data, status, headers, config) {
+		$http.post('http://54.69.152.172:3000/createPlaylist', playlist).success(function(data, status, headers, config) {
 			deferred.resolve(data);
 		}).error(function(data, status, headers, config) {
 			console.log("error in POST request");
