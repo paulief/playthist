@@ -82,8 +82,8 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
       url: "/playlists",
       views: {
         'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/user_playlists.html",
+          controller: 'UserPlaylistsCtrl'
         }
       }
     })

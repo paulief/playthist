@@ -1,4 +1,4 @@
-services.factory('CurrentPlaylist', ['$q', '$http', function($q, $http) {
+services.factory('CurrentBrowsingPlaylist', ['$q', '$http', function($q, $http) {
 	var currentPlaylistService = {};
 	var currentPlaylist = {};
 

@@ -1,4 +1,4 @@
-services.factory('MusicGetter', ['$q', '$http', function($q, $http) {
+services.factory('ExternalMusicGetter', ['$q', '$http', function($q, $http) {
 	var musicGetterService = {};
 
 	musicGetterService.getTracks = function(source, tracklistType, playlistId) {

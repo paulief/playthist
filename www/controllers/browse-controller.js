@@ -1,8 +1,8 @@
 /*
 Controller shared by Browse Playlists and Browse Tracks views
 */
-controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', 'CurrentPlaylist', 'PlaylistHTTPManager', '$ionicModal', 
-	function($scope, $stateParams, MusicGetter, CurrentPlaylist, PlaylistHTTPManager, $ionicModal) {
+controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGetter', 'CurrentBrowsingPlaylist', 'PlaylistHTTPManager', '$ionicModal', 
+	function($scope, $stateParams, ExternalMusicGetter, CurrentBrowsingPlaylist, PlaylistHTTPManager, $ionicModal) {
 
 	//stateParams come in from href in template
 	if ($stateParams.source) {
@@ -11,19 +11,19 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 
 		switch ($stateParams.listType) {
 			case "playlists":
-				MusicGetter.getPlaylists($stateParams.source).then(function(playlists) {
+				ExternalMusicGetter.getPlaylists($stateParams.source).then(function(playlists) {
 					$scope.playlists = playlists;
 				});
 			break;
 			case "tracks":
 				switch($stateParams.tracklistType) {
 					case "favorites":
-						MusicGetter.getTracks($stateParams.source,$stateParams.tracklistType, null).then(function(tracks) {
+						ExternalMusicGetter.getTracks($stateParams.source,$stateParams.tracklistType, null).then(function(tracks) {
 							$scope.tracks = tracks;
 						});
 					break;
 					case "playlistTracks":
-						$scope.tracks = CurrentPlaylist.getCurrentPlaylist().tracks;
+						$scope.tracks = CurrentBrowsingPlaylist.getCurrentPlaylist().tracks;
 					break;
 				}
 			break;
@@ -70,6 +70,6 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'MusicGetter', '
 
 	//playlist chosen from Browse Playlists
 	$scope.choosePlaylistTracks = function(playlist) {
-		CurrentPlaylist.setCurrentPlaylist(playlist);
+		CurrentBrowsingPlaylist.setCurrentPlaylist(playlist);
 	};
 }]);
