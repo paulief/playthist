@@ -1,11 +1,17 @@
   <ion-modal-view>
     <ion-header-bar>
+      <button class="button button-outline button-positive" ng-click="cancelAddingTrack()">Cancel</button>
       <h1 class="title">Add Track To...</h1>
+      <button class="button button-outline button-positive" ng-click="addTrackToLists()">Done</button>
     </ion-header-bar>
     <ion-content>
-      Playlists... <br>
-      <button class="button button-light" ng-click="addTrackToLists()">
-      	Add Track
-      </button>
+      <ion-list>
+        <ion-item class="item item-checkbox" ng-repeat="playlist in userPlaylists">
+          <label class="checkbox checkbox-balanced">
+            <input type="checkbox" ng-model="selectedPlaylists[playlist.playlistId]">
+          </label>
+          {{playlist.playlistName}}
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-modal-view>
