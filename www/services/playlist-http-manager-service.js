@@ -31,6 +31,7 @@ services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 	};
 
 	playlistHTTPManagerService.createPlaylist = function(playlist) {
+		playlist.playlistId = createUniquePlaylistId(playlist.userId);
 		var deferred = $q.defer();
 		$http.post('http://54.69.152.172:3000/createPlaylist', playlist).success(function(data, status, headers, config) {
 			deferred.resolve(data);
@@ -40,11 +41,15 @@ services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 
 		return deferred.promise;
 	};
+	var createUniquePlaylistId = function(userId) {
+		return userId + "" + Date.now();
+	};
 
 	playlistHTTPManagerService.getUserPlaylists = function(userId) {
 		var deferred = $q.defer();
 		$http.get('http://54.69.152.172:3000/getUserPlaylists/' + userId).success(function(data, status, headers, config) {
 			deferred.resolve(data);
+			console.log("data returned");
 		}).error(function(data, status, headers, config) {
 			console.log("error in GET request");
 		});

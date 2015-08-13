@@ -62,6 +62,7 @@ creating a new playlist
 */
 app.post('/createPlaylist', function(req,res) {
 	//values from POST request
+	var playlist_id = req.body.playlistId;
 	var user_id = req.body.userId;
 	var playlist_name = req.body.playlistName;
 
@@ -72,9 +73,9 @@ app.post('/createPlaylist', function(req,res) {
 		};
 
 		var insertSql = "INSERT INTO test.playlists" +
-						"(playlist_name, user_id)" +
-						"VALUES ($1, $2)";
-		client.query(insertSql, [playlist_name, user_id], function(err, result) {
+						"(playlist_id, playlist_name, user_id)" +
+						"VALUES ($1, $2, $3)";
+		client.query(insertSql, [playlist_id, playlist_name, user_id], function(err, result) {
 			done();
 
 			if (err) {
