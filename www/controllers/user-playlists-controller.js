@@ -3,16 +3,17 @@ This is a separate controller from the browse controller because there will be e
 like sharing/exporting/deleting
 */
 
-controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', '$ionicModal', 
-	function($scope, PlaylistHTTPManager, $ionicModal) {
+controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
+	function($scope, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
 		
 		$scope.playlists =  {};
 
-		PlaylistHTTPManager.getUserPlaylists(1).then(function(playlists) {
+		UserPlaylists.getUserPlaylists(1).then(function(playlists) {
 			$scope.playlists = playlists;
 			console.log($scope.playlists);	
-		}); //no playlists?
-		//console.log($scope.playlists);
+		}); //no playlists? 
+
+		//$scope.playlists = UserPlaylists.getUserPlaylists(1);
 
 		$ionicModal.fromTemplateUrl('templates/create_new_playlist.html', {
 			scope: $scope,
