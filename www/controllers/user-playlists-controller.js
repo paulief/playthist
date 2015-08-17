@@ -11,9 +11,8 @@ controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'U
 		UserPlaylists.getUserPlaylists(1).then(function(playlists) {
 			$scope.playlists = playlists;
 			console.log($scope.playlists);	
-		}); //no playlists? 
+		}); //no playlists edge case? 
 
-		//$scope.playlists = UserPlaylists.getUserPlaylists(1);
 
 		$ionicModal.fromTemplateUrl('templates/create_new_playlist.html', {
 			scope: $scope,
@@ -22,8 +21,6 @@ controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'U
 			$scope.modal = modal;
 		});
 
-		//THIS DOES NOT GIVE A PLAYLIST ID SINCE THAT HAPPENS IN THE DB
-		//ANOTHER REQUEST? OR GENERATE THE ID CLIENT-SIDE?
 		$scope.createNewPlaylist = function() {
 			$scope.modal.show();
 		};

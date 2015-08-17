@@ -88,12 +88,12 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
       }
     })
 
-  .state('app.single', {
-    url: "/playlists/:playlistId",
+  .state('app.playlist_tracks', {
+    url: "/playlists/playlist_tracks?playlistId",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/user_playlist_tracks.html",
+        controller: 'UserPlaylistTracksCtrl'
       }
     }
   });

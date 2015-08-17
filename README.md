@@ -15,3 +15,5 @@ Since I am currently using this just as a learning experience, only the back-end
 - Incorporate more sources (currently only have Soundcloud functionality)
 - Incorporate local music library of device (could require custom Cordova plugin?)
 - Add actual music streaming functionality
+- Use Squel for all queries on server
+- More robust way of getting title and artist info (Soundcloud is a bit messy/inconsistent)

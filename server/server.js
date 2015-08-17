@@ -60,19 +60,20 @@ var buildAddTrackInsertStmt = function(trackToAdd, playlists) {
 						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
 						"VALUES ";
 	var insertParams = [];
-	
-	//PLACE FOR REFACTORING? DOESN'T SEEM EFFICIENT
+
+	//PLACE FOR REFACTORING? DOESN'T SEEM EFFICIENT (use of Array.map?)
 	for (var i = 0; i < playlists.length; i++) {
 		insertParams.push({
 			track_id: trackToAdd.trackId,
 			playlist_id: playlists[i],
 			track_title: trackToAdd.trackTitle,
-			track_posted_by: trackToAdd.trackPostedBy,
-			stream_url: trackToAdd.streamUrl,
-			artwork_url: trackToAdd.artworkUrl,
+			track_posted_by: trackToAdd.trackPostedBy || null,
+			stream_url: trackToAdd.streamUrl || null,
+			artwork_url: trackToAdd.artworkUrl || null,
 			track_src: trackToAdd.trackSrc
 		});
 	};
+	console.log(insertParams);
 	var insertSql = squel.insert()
 						.into("test.added_songs")
 						.setFieldsRows(insertParams);
@@ -142,5 +143,53 @@ app.get('/getUserPlaylists/:user_id', function(req, res) {
 			done();
 			res.json(results);
 		});
+	});
+});
+
+app.get('/getUserPlaylistTracks/:playlist_id', function(req, res) {
+	var playlist_id = req.params.playlist_id;
+	var results = [];
+
+	pg.connect(pgConnectionString, function(err, client, done) {
+		if (err) {
+			res.status(500).send(err);
+			console.log(err);
+		};
+		
+		var selectSql = squel.select()
+							.from('test.added_songs')
+							.field('track_id')
+							.field('track_title')
+							.field('stream_url')
+							.field('artwork_url')
+							.field('track_src')
+							.field('create_dtm') //need to pull this back? for ordering maybe
+							.field('track_posted_by')	
+							.where('playlist_id = ?',playlist_id)
+							.toString();
+
+		var query = client.query(selectSql, [], function(err) {
+			if(err) {
+				res.status(500).send(err);
+				console.log(err);
+			};
+		});
+
+		query.on('row', function(row) {
+			results.push({
+				trackId: row.track_id,
+				trackTitle: row.track_title,
+				streamUrl: row.stream_url,
+				artworkUrl: row.artwork_url,
+				trackSrc: row.track_src,
+				trackPostedBy: row.track_posted_by,
+				trackCreateDtm: row.create_dtm
+			});
+		});
+		query.on('end', function() {
+			done();
+			res.json(results);
+		});
+
 	});
 });

@@ -57,5 +57,16 @@ services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 		return deferred.promise;
 	};
 
+	playlistHTTPManagerService.getUserPlaylistTracks = function(playlistId) {
+		var deferred = $q.defer();
+		$http.get('http://54.69.152.172:3000/getUserPlaylistTracks/' + playlistId).success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		}).error(function(data, status, headers, config) {
+			console.log("error in GET request");
+		});
+
+		return deferred.promise;
+	};
+
 	return playlistHTTPManagerService;
 }]);
