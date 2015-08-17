@@ -60,8 +60,8 @@ var buildAddTrackInsertStmt = function(trackToAdd, playlists) {
 						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
 						"VALUES ";
 	var insertParams = [];
-	console.log(playlists);
-	//var workingCopy = trackToAdd.slice(0); //creating copy to change
+	
+	//PLACE FOR REFACTORING? DOESN'T SEEM EFFICIENT
 	for (var i = 0; i < playlists.length; i++) {
 		insertParams.push({
 			track_id: trackToAdd.trackId,
