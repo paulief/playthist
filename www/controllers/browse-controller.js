@@ -72,7 +72,7 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 		
 		var chosenPlaylistsIds = Object.keys($scope.selectedPlaylists);
 		console.log(chosenPlaylistsIds);
-		var trackToSave = {track: $scope.activeTrack, playlists: 1 /*will be array*/};
+		var trackToSave = {track: $scope.activeTrack, playlists: chosenPlaylistsIds /*will be array*/};
 		//need error handling here
 		PlaylistHTTPManager.addTrackToPlaylist(trackToSave).then(function(msg) {
 			console.log(msg);

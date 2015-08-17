@@ -1,6 +1,7 @@
 var express = require('express');
 var cors = require('cors'); //Only needed in test environment to bypass cross-origin restrictions
 var bodyParser = require('body-parser');
+var squel = require('squel');
 //DB setup
 var pg = require('pg');
 var pgConnectionString = 'postgres://pfagan:archmere09@playthist-db.cy8flcjp70zs.us-west-2.rds.amazonaws.com:5432/playthist';
@@ -28,27 +29,24 @@ adding to tracks to one or many playlists
 */
 app.post('/addTrack', function(req,res) {
 	//values from POST request
-	var track_id = req.body.track.trackId;
-	var playlist_id = req.body.playlists; //will be array
-	var track_title = req.body.track.trackTitle;
-	var track_posted_by = req.body.track.trackPostedBy;
-	var stream_url = req.body.track.streamUrl;
-	var artwork_url = req.body.track.artworkUrl;
-	var track_src = req.body.track.trackSrc;
+	var trackToAdd = req.body.track;
+	var playlists = req.body.playlists;
 
 	pg.connect(pgConnectionString, function(err, client, done) {
 		if(err) {
 			res.status(500).send(err);
 		};
 
-		var insertSql = "INSERT INTO test.added_songs" +
+		/*var insertSql = "INSERT INTO test.added_songs" +
 						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
-						"VALUES ($1, $2, $3, $4, $5, $6, $7)";
-		client.query(insertSql, [track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src],
+						"VALUES ($1, $2, $3, $4, $5, $6, $7)"; */
+		var insertSql = buildAddTrackInsertStmt(trackToAdd, playlists);
+		client.query(insertSql, [],
 			function(err, result) {
 				done();
 
 				if (err) {
+					console.log(err);
 					res.status(500).send(err); //why is the database error not coming back?
 				} else {
 					res.status(200).send({message: "Track added to playlists"});
@@ -56,6 +54,31 @@ app.post('/addTrack', function(req,res) {
 		});
 	}); 
 });
+
+var buildAddTrackInsertStmt = function(trackToAdd, playlists) {
+	var insertString = "INSERT INTO test.added_songs" +
+						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
+						"VALUES ";
+	var insertParams = [];
+	console.log(playlists);
+	//var workingCopy = trackToAdd.slice(0); //creating copy to change
+	for (var i = 0; i < playlists.length; i++) {
+		insertParams.push({
+			track_id: trackToAdd.trackId,
+			playlist_id: playlists[i],
+			track_title: trackToAdd.trackTitle,
+			track_posted_by: trackToAdd.trackPostedBy,
+			stream_url: trackToAdd.streamUrl,
+			artwork_url: trackToAdd.artworkUrl,
+			track_src: trackToAdd.trackSrc
+		});
+	};
+	var insertSql = squel.insert()
+						.into("test.added_songs")
+						.setFieldsRows(insertParams);
+	console.log(insertSql.toString());
+	return insertSql.toString();
+}
 
 /*
 creating a new playlist

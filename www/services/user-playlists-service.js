@@ -23,7 +23,7 @@ services.factory('UserPlaylists', ['PlaylistHTTPManager', '$q', function(Playlis
 			var tempPromise = $q.defer();
 			tempPromise.resolve(userPlaylists);
 			return tempPromise.promise;
-		}
+		};
 	};
 
 	return userPlaylistsService;
