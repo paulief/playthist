@@ -9,17 +9,14 @@ services.factory('UserPlaylists', ['PlaylistHTTPManager', '$q', function(Playlis
 
 	userPlaylistsService.getUserPlaylists = function(userId) {
 		if (!alreadyRetrievedPlaylists) { 
-			console.log("calling HTTP service");
-
+			//calling HTTP service
 			return PlaylistHTTPManager.getUserPlaylists(userId).then(function(playlists) {
 				userPlaylists = playlists;
-				console.log(userPlaylists);
 				alreadyRetrievedPlaylists = true;
 				return userPlaylists;
 			});
 		} else {
-			console.log("playlists already retrieved");
-			console.log(userPlaylists);
+			//playlists already retrieved
 			var tempPromise = $q.defer();
 			tempPromise.resolve(userPlaylists);
 			return tempPromise.promise;

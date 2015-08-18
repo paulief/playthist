@@ -2,8 +2,6 @@
 Service to handle all HTTP requests involving retrieving or editing playlists (adding/remmoving tracks, etc.)
 TODO:
 need to pull hostname of node server from config file
-retrieving tracks for user playlist
-creating new playlist
 */
 services.factory('PlaylistHTTPManager', ['$q', '$http', function($q, $http) {
 	var playlistHTTPManagerService = {};

@@ -4,7 +4,11 @@ Controller shared by Browse Playlists and Browse Tracks views
 controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGetter', 'CurrentBrowsingPlaylist', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
 	function($scope, $stateParams, ExternalMusicGetter, CurrentBrowsingPlaylist, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
 
-	//stateParams come in from href in template
+	/*
+	stateParams come in from href in template
+	Currently, the same browse template is used for browsing playlists and tracks
+	If different functinality is needed, will need to refactor this
+	*/
 	if ($stateParams.source) {
 		console.log($stateParams.source);
 		console.log($stateParams.listType);
@@ -37,15 +41,19 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 		$scope.modal = modal;
 	});
 
+	//playlist chosen from Browse Playlists
+	$scope.choosePlaylistTracks = function(playlist) {
+		CurrentBrowsingPlaylist.setCurrentPlaylist(playlist);
+	};
 
 	//Functions for the track list page *****************************************
 
 	$scope.trackChosenToAdd = function(track) {
-		$scope.activeTrack = getNeededTrackFields(track);
+		$scope.activeTrack = PlaythistTrack(track);
 		openPlaylistChoices();
 	};
 
-	var getNeededTrackFields = function(track) {
+	var PlaythistTrack = function(track) {
 		return {
 			trackId: track.id,
 			trackTitle: track.title,
@@ -57,7 +65,7 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 	};
 
 	var openPlaylistChoices = function() {
-		UserPlaylists.getUserPlaylists(1).then(function(playlists) {
+		UserPlaylists.getUserPlaylists(1/*user ID*/).then(function(playlists) {
 			$scope.userPlaylists = playlists;
 		});
 		$scope.modal.show();
@@ -69,9 +77,7 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 
 	$scope.selectedPlaylists = {};
 	$scope.addTrackToLists = function() {
-		
-		var chosenPlaylistsIds = Object.keys($scope.selectedPlaylists);
-		console.log(chosenPlaylistsIds);
+		var chosenPlaylistsIds = Object.keys($scope.selectedPlaylists); //only need IDs, not boolean values
 		var trackToSave = {track: $scope.activeTrack, playlists: chosenPlaylistsIds /*will be array*/};
 		//need error handling here
 		PlaylistHTTPManager.addTrackToPlaylist(trackToSave).then(function(msg) {
@@ -80,8 +86,4 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 		});		
 	};
 
-	//playlist chosen from Browse Playlists
-	$scope.choosePlaylistTracks = function(playlist) {
-		CurrentBrowsingPlaylist.setCurrentPlaylist(playlist);
-	};
 }]);

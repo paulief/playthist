@@ -37,9 +37,6 @@ app.post('/addTrack', function(req,res) {
 			res.status(500).send(err);
 		};
 
-		/*var insertSql = "INSERT INTO test.added_songs" +
-						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
-						"VALUES ($1, $2, $3, $4, $5, $6, $7)"; */
 		var insertSql = buildAddTrackInsertStmt(trackToAdd, playlists);
 		client.query(insertSql, [],
 			function(err, result) {
@@ -56,12 +53,14 @@ app.post('/addTrack', function(req,res) {
 });
 
 var buildAddTrackInsertStmt = function(trackToAdd, playlists) {
-	var insertString = "INSERT INTO test.added_songs" +
-						"(track_id, playlist_id, track_title, track_posted_by, stream_url, artwork_url, track_src)" +
-						"VALUES ";
+	/*
+	DB IS NOT CURRENTLY NORMALIZED. NEED TO CONSIDER TRADEOFFS OF CREATING TRACK TABLE
+	FOR NOW, IT WILL STAY DENORMALIZED  AS I FOCUS ON OTHER FEATURES
+	*/
+
 	var insertParams = [];
 
-	//PLACE FOR REFACTORING? DOESN'T SEEM EFFICIENT (use of Array.map?)
+	//PLACE FOR REFACTORING? DOESN'T SEEM EFFICIENT (use of Array.map or Object.create?)
 	for (var i = 0; i < playlists.length; i++) {
 		insertParams.push({
 			track_id: trackToAdd.trackId,
@@ -76,8 +75,7 @@ var buildAddTrackInsertStmt = function(trackToAdd, playlists) {
 	console.log(insertParams);
 	var insertSql = squel.insert()
 						.into("test.added_songs")
-						.setFieldsRows(insertParams);
-	console.log(insertSql.toString());
+						.setFieldsRows(insertParams); //takes array and creates multi-row insert
 	return insertSql.toString();
 }
 

@@ -31,7 +31,7 @@ controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'U
 			PlaylistHTTPManager.createPlaylist(newPlaylist).then(function(msg) {
 				console.log(msg.message);
 				$scope.playlists.push(newPlaylist);
-				console.log($scope.playlists);
+				$scope.newPlaylistTitle.text = '';
 				$scope.modal.hide();
 			});
 			console.log("Creating playlist: " + $scope.newPlaylistTitle.text);
