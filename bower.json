@@ -3,5 +3,9 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0"
+  },
+  "dependencies": {
+    "userapp-angular": "~2.0.4",
+    "userapp-phonegap": "~1.2.0"
   }
 }

@@ -3,5 +3,4 @@ This controller will eventually handle which sources the user has added to their
 For now, Soundcloud and Spotify are displayed
 */
 controllers.controller('BrowseSourceCtrl', ['$scope', function() {
-	console.log("Ctrlr found");
 }]);

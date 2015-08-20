@@ -6,19 +6,21 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form ua-login ng-submit="completeLogin()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
+          <input type="text" name="login">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
+          <input type="password" name="password">
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
+        <p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
+        <p ng-show="error">{{ error.message }}</p>
       </div>
     </form>
   </ion-content>
