@@ -1,16 +1,24 @@
-controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', function($scope, $rootScope, $ionicModal) {
+controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', '$timeout', function($scope, $rootScope, $ionicModal, $timeout) {
 
 	$scope.username = {};
 	$scope.password = {};
+
+	$ionicModal.fromTemplateUrl('templates/login.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.loginModal = modal;
+	});
+
+	$ionicModal.fromTemplateUrl('templates/signup.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.signupModal = modal;
+	});
 	
 	$scope.initiateLogin = function() {
-		$ionicModal.fromTemplateUrl('templates/login.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function(modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
+			$scope.loginModal.show();
 	};
 
 	$scope.completeLogin = function() {
@@ -23,6 +31,7 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', funct
 		}, function(error, result) {
 			if (error) {
 				console.log(error);
+				//$scope.error = error;
 			} else {
 				console.log("User logged in");
 			};
@@ -30,8 +39,16 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', funct
 	};
 
 	$scope.cancelLogin = function() {
-		$scope.modal.hide();
-	}
+		$scope.loginModal.hide();
+	};
+
+	$scope.initiateSignup = function() {
+		$scope.loginModal.hide();
+		$timeout(function() {$scope.signupModal.show()}, 500);
+	};
 	
+	$scope.cancelSignup = function() {
+		$scope.signupModal.hide();
+	};
 
 }]);

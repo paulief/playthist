@@ -1,0 +1,25 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Signup</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="cancelSignup()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" name="login" ng-model="username.text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" name="password" ng-model="password.text">
+        </label>
+        <label class="item">
+          <button class="button button-block button-balanced" ng-click="initiateSignup()">Sign Up</button>
+        </label>
+        <p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
+        <p ng-show="error">{{ error.message }}</p>
+      </div>
+  </ion-content>
+</ion-modal-view>

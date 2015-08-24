@@ -2,7 +2,7 @@
   <ion-header-bar>
     <h1 class="title">Login</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+      <button class="button button-clear" ng-click="cancelLogin()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>
@@ -17,6 +17,9 @@
         </label>
         <label class="item">
           <button class="button button-block button-positive" ng-click="completeLogin()">Log in</button>
+        </label>
+        <label class="item">
+          <button class="button button-block button-balanced" ng-click="initiateSignup()">Sign Up</button>
         </label>
         <p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
         <p ng-show="error">{{ error.message }}</p>
