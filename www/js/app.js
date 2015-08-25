@@ -27,6 +27,7 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
   .state('login', {
     url: "/login",
     templateUrl: "templates/login.html",
+    controller: 'UserCtrl',
     data: {
       login: true
     }
@@ -35,6 +36,7 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
   .state('signup', {
     url: "/signup",
     templateUrl: "templates/signup.html",
+    controller: 'UserCtrl',
     data: {
       public: true
     }
@@ -56,10 +58,10 @@ angular.module('starter', ['ionic', 'playthist.controllers', 'playthist.services
       'menuContent': {
         templateUrl: "templates/browse_sources.html",
         controller: "BrowseSourceCtrl"
-      },
-      data: {
-        public: true
       }
+    },
+    data: {
+      public: false
     }
   })
 
