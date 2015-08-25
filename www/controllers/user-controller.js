@@ -22,23 +22,24 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', '$tim
 	
 	$scope.initiateLogin = function() {
 			$scope.loginModal.show();
+			setLoading(false);
+			setError(null);
 	};
 
 	$scope.completeLogin = function() {
-		//console.log($scope.error);
-		//console.log($rootScope.error);
-		//SHOULD VALIDATE LOGIN (CAN BE DONE IN TEMPLATE)
+		setError(null);
+		setLoading(true);
 		user.login({
 			login: $scope.username.text,
 			password: $scope.password.text
 		}, function(error, result) {
 			if (error) {
 				console.log(error);
-				//$scope.error = error;
+				setError(error);
+				setLoading(false);
 			} else {
-				//ADD TOKEN TO COOKIES
 				console.log("User logged in");
-				console.log($rootScope.user);
+				setLoading(false);
 				$scope.loginModal.hide();
 			};
 		});
@@ -54,7 +55,9 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', '$tim
 	};
 
 	$scope.completeSignup = function() {
-		UserApp.User.save({
+		setError(null);
+		setLoading(true);
+		user.signup({
 			first_name: $scope.firstName.text,
 			last_name: $scope.lastName.text,
 			email: $scope.email.text,
@@ -68,8 +71,12 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', '$tim
 		}, function(error, result) {
 			if (error) {
 				console.log(error);
+				setError(error);
+				setLoading(false);
 			} else {
 				console.log("Created user " + result.login);
+				setLoading(false);
+				$scope.signupModal.hide();
 			};
 		});
 	};
@@ -81,6 +88,21 @@ controllers.controller('UserCtrl', ['$scope', '$rootScope', '$ionicModal', '$tim
 	$scope.logout = function() {
 		user.logout(function() {
 			console.log("User logged out");
+			$scope.username.text = "";
+			$scope.password.text = "";
+		});
+	};
+
+	//refactoring out stopping loading img and error
+	var setLoading = function(loading) {
+		$timeout(function() {
+			$scope.loading = loading;
+		});
+	};
+
+	var setError = function(error) {
+		$timeout(function() {
+			$scope.error = error;
 		});
 	};
 
