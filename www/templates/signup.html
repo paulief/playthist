@@ -8,6 +8,18 @@
   <ion-content>
       <div class="list">
         <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" name="firstName" ng-model="firstName.text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" name="lastName" ng-model="lastName.text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" name="email" ng-model="email.text">
+        </label>
+        <label class="item item-input">
           <span class="input-label">Username</span>
           <input type="text" name="login" ng-model="username.text">
         </label>
@@ -16,7 +28,7 @@
           <input type="password" name="password" ng-model="password.text">
         </label>
         <label class="item">
-          <button class="button button-block button-balanced" ng-click="initiateSignup()">Sign Up</button>
+          <button class="button button-block button-balanced" ng-click="completeSignup()">Sign Up</button>
         </label>
         <p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
         <p ng-show="error">{{ error.message }}</p>

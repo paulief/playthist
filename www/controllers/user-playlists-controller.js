@@ -3,14 +3,14 @@ This is a separate controller from the browse controller because there will be e
 like sharing/exporting/deleting
 */
 
-controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
-	function($scope, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
+controllers.controller('UserPlaylistsCtrl', ['$scope', '$rootScope', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
+	function($scope, $rootScope, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
 		
 		$scope.playlists =  {};
 
-		UserPlaylists.getUserPlaylists(1).then(function(playlists) {
+		UserPlaylists.getUserPlaylists($rootScope.user.user_id).then(function(playlists) {
 			$scope.playlists = playlists;
-			console.log($scope.playlists);	
+			console.log($rootScope.user.user_id);	
 		}); //no playlists edge case? 
 
 
@@ -26,7 +26,8 @@ controllers.controller('UserPlaylistsCtrl', ['$scope', 'PlaylistHTTPManager', 'U
 		};
 		$scope.newPlaylistTitle = {};
 		$scope.saveNewPlaylist = function() {
-			var newPlaylist = {userId: 1, playlistName: $scope.newPlaylistTitle.text};
+			console.log($rootScope.user.user_id);
+			var newPlaylist = {userId: $rootScope.user.user_id, playlistName: $scope.newPlaylistTitle.text};
 			//need error handling here
 			PlaylistHTTPManager.createPlaylist(newPlaylist).then(function(msg) {
 				console.log(msg.message);

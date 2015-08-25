@@ -1,8 +1,8 @@
 /*
 Controller shared by Browse Playlists and Browse Tracks views
 */
-controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGetter', 'CurrentBrowsingPlaylist', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
-	function($scope, $stateParams, ExternalMusicGetter, CurrentBrowsingPlaylist, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
+controllers.controller('BrowseCtrl', ['$scope', '$rootScope', '$stateParams', 'ExternalMusicGetter', 'CurrentBrowsingPlaylist', 'PlaylistHTTPManager', 'UserPlaylists', '$ionicModal', 
+	function($scope, $rootScope, $stateParams, ExternalMusicGetter, CurrentBrowsingPlaylist, PlaylistHTTPManager, UserPlaylists, $ionicModal) {
 
 	/*
 	stateParams come in from href in template
@@ -65,7 +65,8 @@ controllers.controller('BrowseCtrl', ['$scope', '$stateParams', 'ExternalMusicGe
 	};
 
 	var openPlaylistChoices = function() {
-		UserPlaylists.getUserPlaylists(1/*user ID*/).then(function(playlists) {
+
+		UserPlaylists.getUserPlaylists($rootScope.user.user_id).then(function(playlists) {
 			$scope.userPlaylists = playlists;
 		});
 		$scope.modal.show();
