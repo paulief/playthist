@@ -3,8 +3,9 @@ var cors = require('cors'); //Only needed in test environment to bypass cross-or
 var bodyParser = require('body-parser');
 var squel = require('squel');
 //DB setup
+var dbConfig = require('config').get('Playthist.dbConfig');
 var pg = require('pg');
-var pgConnectionString = 'postgres://pfagan:archmere09@playthist-db.cy8flcjp70zs.us-west-2.rds.amazonaws.com:5432/playthist';
+var pgConnectionString = 'postgres://'+dbConfig.username+':'+dbConfig.password+'@'+dbConfig.host+':'+dbConfig.port+'/'+dbConfig.dbName;
 
 var app = express();
 
